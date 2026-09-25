@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HFgTV Giveaway Verification</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <h1 class="title" data-i18n="title">Проверка розыгрыша</h1>
+            <p class="subtitle" data-i18n="subtitle">Убедитесь, что победители выбраны честно, без вмешательства организаторов. Мы используем публичный генератор случайностей drand.</p>
+            <div class="lang-toggle">
+                <button type="button" class="lang-btn active" data-lang="ru">RU</button>
+                <button type="button" class="lang-btn" data-lang="en">EN</button>
+            </div>
+        </header>
+
+        <section class="panel">
+            <h2 class="panel-title" data-i18n="inputTitle">Данные розыгрыша</h2>
+            <form id="verify-form" class="form">
+                <div class="field">
+                    <label for="round-input" data-i18n="roundLabel">Раунд drand</label>
+                    <input type="number" id="round-input" min="1" required>
+                </div>
+                <div class="field">
+                    <label for="participants-input" data-i18n="participantsLabel">Всего участников</label>
+                    <input type="number" id="participants-input" min="1" required>
+                </div>
+                <div class="field">
+                    <label for="winners-input" data-i18n="winnersLabel">Призовых мест</label>
+                    <input type="number" id="winners-input" min="1" required>
+                </div>
+                <button type="submit" id="submit-btn" class="button" data-i18n="verifyButton">Проверить победителей</button>
+            </form>
+        </section>
+
+        <section id="error-card" class="panel error-panel hidden">
+            <div class="error-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span data-i18n="fetchErrorTitle">Сбой подключения к drand</span>
+            </div>
+            <p data-i18n="fetchErrorDesc">Не удалось получить данные о раунде. Возможно, указан неверный номер или сервис недоступен.</p>
+            <a href="https://drand.statuspage.io/" target="_blank" class="text-link" data-i18n="statusLink">Проверить статус drand</a>
+        </section>
+
+        <section id="result-card" class="panel result-panel hidden">
+            <div class="verified-banner">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 6L9 17l-5-5"></path>
+                </svg>
+                <span data-i18n="verifiedText">Результат подтверждён криптографией</span>
+            </div>
+
+            <div class="result-grid">
+                <div>
+                    <h3 class="label" data-i18n="winnersLabel">Победители (номера билетов)</h3>
+                    <div id="winners-container" class="winners-list"></div>
+                </div>
+                <div>
+                    <h3 class="label" data-i18n="drandDataLabel">Технические детали</h3>
+                    <dl class="details-list">
+                        <dt data-i18n="timeLabel">Время:</dt>
+                        <dd id="res-time">-</dd>
+                        <dt data-i18n="seedLabel">Случайный сид:</dt>
+                        <dd class="mono-text" id="res-randomness">-</dd>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel text-panel">
+            <h2 class="panel-title" data-i18n="explainTitle">Как это работает?</h2>
+            <div class="explain-text">
+                <p data-i18n="explain1">Мы используем drand — независимую сеть, которая публично генерирует случайные числа каждую секунду. Ни мы, ни организатор не можем знать это число заранее или подстроить его.</p>
+                <p data-i18n="explain2">Когда розыгрыш заканчивается, мы берем актуальное случайное число (сид) от drand и перемешиваем список участников с помощью стандартного алгоритма. Вы можете ввести номер раунда выше и получить точно такой же список победителей, как в боте.</p>
+            </div>
+            <h3 class="label" data-i18n="linksTitle">Ссылки</h3>
+            <div class="links-grid">
+                <a href="https://drand.love" target="_blank" class="text-link">drand.love</a>
+                <a id="current-api-direct" href="https://api.drand.sh/public/latest" target="_blank" class="text-link" data-i18n="apiLink">API drand</a>
+                <a href="https://github.com/5xs/hfgtvgiveawaybotrandomchecker" target="_blank" class="text-link" data-i18n="repoLink">Исходный код</a>
+            </div>
+        </section>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>

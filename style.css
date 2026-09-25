@@ -1,0 +1,264 @@
+:root {
+    --bg: #09090b;
+    --surface: #18181b;
+    --border: #27272a;
+    --text: #f4f4f5;
+    --text-dim: #a1a1aa;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --success: #10b981;
+    --error: #ef4444;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    padding: 60px 20px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.header {
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    max-width: 90%;
+    margin-bottom: 24px;
+}
+
+.lang-toggle {
+    display: inline-flex;
+    gap: 12px;
+}
+
+.lang-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 0;
+}
+
+.lang-btn.active {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 6px;
+}
+
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+}
+
+.panel-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: end;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field label {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+}
+
+.field input {
+    width: 100%;
+    min-width: 0;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 12px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.field input:focus {
+    border-color: var(--accent);
+}
+
+.button {
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    grid-column: span 3;
+    margin-top: 8px;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.error-panel {
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.error-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--error);
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.result-panel {
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.verified-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--success);
+    font-weight: 500;
+    margin-bottom: 32px;
+}
+
+.result-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+}
+
+.winners-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.winner-tag {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+}
+
+.details-list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px 24px;
+    font-size: 0.9rem;
+}
+
+.details-list dt {
+    color: var(--text-dim);
+}
+
+.details-list dd {
+    color: var(--text);
+    word-break: break-all;
+}
+
+.mono-text {
+    font-family: var(--font-mono);
+}
+
+.text-panel .explain-text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+}
+
+.links-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.text-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.text-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .form {
+        grid-template-columns: 1fr;
+    }
+    .button {
+        grid-column: span 1;
+    }
+    .details-list {
+        grid-template-columns: 1fr;
+        gap: 4px 0;
+    }
+    .details-list dt {
+        margin-top: 8px;
+    }
+}
