@@ -118,7 +118,7 @@ async function runVerification(round, participants, winnersCount) {
     errorCard.classList.add('hidden');
 
     try {
-        const apiUrl = `https://api.drand.sh/public/${round}`;
+        const apiUrl = `https://api.drand.sh/52db9ba70e0cc0f6eaf7803dd07447a1f5477735fd3f661792ba94600c84e971/public/${round}`;
         const res = await fetch(apiUrl);
         if (!res.ok) throw new Error('Fetch failed');
         
@@ -130,7 +130,7 @@ async function runVerification(round, participants, winnersCount) {
         const shuffled = shuffleArray(tickets, prng);
         const winningTickets = shuffled.slice(0, Math.min(winnersCount, participants));
         
-        const estTimestamp = (1586854800 + (data.round - 1) * 3) * 1000;
+        const estTimestamp = (1692803367 + (data.round - 1) * 3) * 1000;
         document.getElementById('res-time').textContent = new Date(estTimestamp).toLocaleString(currentLang === 'ru' ? 'ru-RU' : 'en-US');
         document.getElementById('res-randomness').textContent = randomness;
 
