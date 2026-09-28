@@ -1,5 +1,5 @@
 function sfc32(a, b, c, d) {
-    return function() {
+    return function () {
         a >>>= 0; b >>>= 0; c >>>= 0; d >>>= 0;
         let t = (a + b | 0) + d | 0;
         d = d + 1 | 0;
@@ -53,8 +53,16 @@ const texts = {
         timeLabel: "Время:",
         seedLabel: "Случайный сид:",
         explainTitle: "Как это работает?",
-        explain1: "Мы используем drand — независимую сеть, которая публично генерирует случайные числа каждую секунду. Ни мы, ни организатор не можем знать это число заранее или подстроить его.",
-        explain2: "Когда розыгрыш заканчивается, мы берем актуальное случайное число (сид) от drand и перемешиваем список участников с помощью стандартного алгоритма. Вы можете ввести номер раунда выше и получить точно такой же список победителей, как в боте.",
+        explain1: "Мы используем drand — независимый сервис, который каждые 3 секунды публикует случайные числа. Никто не может узнать это число заранее или подстроить его под себя.",
+        formulaTitle: "Как выбираются победители",
+        step1Label: "1. Случайное число",
+        step1Desc: "Когда розыгрыш завершается, бот берет свежее случайное число из раунда drand.",
+        step2Label: "2. Запуск генератора",
+        step2Desc: "Полученное число разбивается на части и запускает алгоритм SFC32 для честного перемешивания.",
+        step3Label: "3. Перемешивание билетов",
+        step3Desc: "Список билетов участников перемешивается по алгоритму Фишера-Йейтса. У каждого билета строго равный шанс на победу без повторов.",
+        step4Label: "4. Выбор призеров",
+        step4Desc: "Первые выпавшие номера становятся победителями. Расчет полностью прозрачен и одинаков в боте и на этой странице.",
         linksTitle: "Ссылки",
         apiLink: "API drand",
         repoLink: "Исходный код",
@@ -76,8 +84,16 @@ const texts = {
         timeLabel: "Time:",
         seedLabel: "Random Seed:",
         explainTitle: "How it works?",
-        explain1: "We use drand — an independent network that publicly generates random numbers every second. Neither we nor the host can predict or manipulate this number.",
-        explain2: "When a giveaway ends, we take the current random number (seed) from drand and shuffle the participant list using a standard algorithm. You can enter the round number above to get the exact same winner list as the bot.",
+        explain1: "We use drand — an independent service that publishes random numbers every 3 seconds. Nobody can predict or manipulate this number beforehand.",
+        formulaTitle: "How winners are selected",
+        step1Label: "1. Random Number",
+        step1Desc: "When a giveaway ends, the bot fetches the latest random number from the drand round.",
+        step2Label: "2. Generator Initialization",
+        step2Desc: "The seed is split into chunks to initialize the SFC32 algorithm for fair shuffling.",
+        step3Label: "3. Ticket Shuffling",
+        step3Desc: "The participant ticket list is shuffled using the Fisher-Yates algorithm. Every ticket has an exactly equal chance to win.",
+        step4Label: "4. Winner Selection",
+        step4Desc: "The top tickets from the shuffled list are awarded the prizes. The result is fully transparent and identical in both the bot and on this site.",
         linksTitle: "Links",
         apiLink: "drand API",
         repoLink: "Source Code",
@@ -121,7 +137,7 @@ async function runVerification(round, participants, winnersCount) {
         const apiUrl = `https://api.drand.sh/52db9ba70e0cc0f6eaf7803dd07447a1f5477735fd3f661792ba94600c84e971/public/${round}`;
         const res = await fetch(apiUrl);
         if (!res.ok) throw new Error('Fetch failed');
-        
+
         const data = await res.json();
         const randomness = data.randomness;
 
@@ -129,7 +145,7 @@ async function runVerification(round, participants, winnersCount) {
         const prng = createPrngFromHex(randomness);
         const shuffled = shuffleArray(tickets, prng);
         const winningTickets = shuffled.slice(0, Math.min(winnersCount, participants));
-        
+
         const estTimestamp = (1692803367 + (data.round - 1) * 3) * 1000;
         document.getElementById('res-time').textContent = new Date(estTimestamp).toLocaleString(currentLang === 'ru' ? 'ru-RU' : 'en-US');
         document.getElementById('res-randomness').textContent = randomness;

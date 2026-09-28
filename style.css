@@ -231,6 +231,36 @@ body {
     color: var(--text-dim);
 }
 
+.algorithm-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 6px 0;
+}
+
+.steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0;
+}
+
+.steps-list li {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 14px;
+}
+
+.steps-list strong {
+    color: var(--text);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.95rem;
+}
+
 .links-grid {
     display: flex;
     flex-direction: column;
